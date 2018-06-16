@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Расходы</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">Smart Budget</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="/expenses/">Expenses</a></li>
+            <li><a href="/vehicle/">Vehicles</a></li>
+            <li><a href="/communication/">Communications</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="btn-group">
+        <a href="/expenses/form/" role="button" class="btn btn-primary">Добавить</a>
+        <button type="button" class="btn btn-primary">Изменить остаток</button>
+        <button type="button" class="btn btn-primary">Пополнить копилку</button>
+        <button type="button" class="btn btn-primary">Изменить курс валют</button>
+        <button type="button" class="btn btn-primary">Отчеты</button>
+    </div>
+    <p></p>
+    <h3>Расходы за текущий месяц</h3>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>Потрачено за месяц</th>
+            <th>Сколько всего денег</th>
+            <th>Доступный остаток</th>
+            <th><p th:text="'C начала учета (' + ${statistic[open_balance_date]} + ')'"></p> </th>
+            <th><p th:text="'Доллары (курс ' + ${statistic[dollar_price]} + ')'"></p> </th>
+            <th><p th:text="'Евро ( курс' + ${statistic[euro_price]} + ')'"></p> </th>
+        </tr>
+        <tbody>
+        <tr>
+            <th><p th:text="${statistic[amount]}"></p></th>
+            <th><p th:text="${statistic[rest_all_amount]}"></p></th>
+            <th><p th:text="${statistic[rest_amount]}"></p></th>
+            <th><p th:text="${statistic[open_balance_amount]}"></p></th>
+            <th><p th:text="${statistic[rest_dollar_amount]} + ' (' + ${statistic[rest_dollar_in_rub]} + ' руб.)'"></p></th>
+            <th><p th:text="${statistic[rest_euro_amount]} + ' (' + ${statistic[rest_euro_in_rub]} + ' руб.)'"></p></th>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <p>Итоги</p>
+    <table class="table table-bordered">
+        <tr>
+            <th th:each="total : ${totals}"><p th:text="${total.key}" ></p></th>
+        </tr>
+        <tbody>
+        <tr>
+            <td th:each="total : ${totals}"><p th:text="${total.value}"></p></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>Лист расходов</p>
+
+    <table class="table table-bordered" width="100">
+        <thead>
+        <tr>
+            <td width="20" height="1">ID</td>
+            <td width="50">Описание</td>
+            <td width="50">Тип</td>
+            <td width="50">Дата</td>
+            <td width="50">Сумма</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="result : ${results}" >
+            <td th:text="${result.id}"></td>
+            <td th:text="${result.description}"></td>
+            <td th:text="${result.type}"></td>
+            <td th:text="${result.date}"></td>
+            <td th:text="${result.amount}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+    <p th:text="'Hello, ' + ${statistic} + '!'" />
+</div>
+</body>
+</html>
