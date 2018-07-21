@@ -16,7 +16,6 @@ package com.ui.mvc;
 import com.google.common.collect.ImmutableMap;
 import com.ui.mvc.model.Expenses;
 import com.ui.service.ExpensesService;
-import com.ui.service.Util;
 import org.apache.http.auth.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -102,6 +101,49 @@ public class BudgetController {
 		Expenses expenses = ExpensesService.of(USER, PASSWORD).saveExpenses(month, year, type, desc, amount, false);
 		model.addAttribute("expenses", expenses);
 		return "expenses/expenses_add_response";
+	}
+
+	@RequestMapping(value = "/expenses/balance/update", method = RequestMethod.GET)
+	public String updateExpensesBalance()  {
+		return "expenses/expenses_update_balance";
+	}
+
+	@RequestMapping(value = "/expenses/balance/response", method = RequestMethod.GET)
+	public String updateExpensesBalanceResponse(Model model,
+			@RequestParam(value = "amount") String amount
+	) throws IOException, AuthenticationException {
+
+		String updatedAmount = ExpensesService.of(USER, PASSWORD).updateExpensesBalance(amount, false);
+		model.addAttribute("updated_amount", updatedAmount);
+		return "expenses/expenses_update_balance_response";
+	}
+
+	@RequestMapping(value = "expenses/fund/update", method = RequestMethod.GET)
+	public String fundUpdate(Model model) {
+
+		Map<String,String> currencies = new ImmutableMap.Builder<String,String>()
+				.put("1", "Доллар")
+				.put("2", "Евро")
+				.put("3", "Рубль")
+				.build();
+
+		model.addAttribute("currencies", currencies.entrySet());
+		return "expenses/fund_update";
+	}
+
+	@RequestMapping(value = "expenses/fund/response", method = RequestMethod.GET)
+	public String fundResponse(Model model,
+			@RequestParam(value = "amount") String amount,
+			@RequestParam(value = "currency") String currency,
+			@RequestParam(value = "price") String price,
+			@RequestParam(value = "description") String description
+	) throws IOException, AuthenticationException {
+
+		Map<String, String> result =
+				ExpensesService.of(USER, PASSWORD).fundUpdate(amount, currency, price, description, false);
+
+		model.addAttribute("result", result);
+		return "expenses/fund_response";
 	}
 
 	@RequestMapping(value = "/vehicle", method = RequestMethod.GET)

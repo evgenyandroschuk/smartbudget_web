@@ -27,8 +27,8 @@
 <div class="container">
     <div class="btn-group">
         <a href="/expenses/form/" role="button" class="btn btn-primary">Добавить</a>
-        <button type="button" class="btn btn-primary">Изменить остаток</button>
-        <button type="button" class="btn btn-primary">Пополнить копилку</button>
+        <a href="/expenses/balance/update" role="button" class="btn btn-primary">Изменить остаток</a>
+        <a href="/expenses/fund/update" role="button" class="btn btn-primary">Пополнить копилку</a>
         <button type="button" class="btn btn-primary">Изменить курс валют</button>
         <button type="button" class="btn btn-primary">Отчеты</button>
     </div>
@@ -93,8 +93,6 @@
         </tbody>
     </table>
 
-
-    <p th:text="'Hello, ' + ${statistic} + '!'" />
 </div>
 </body>
 </html>

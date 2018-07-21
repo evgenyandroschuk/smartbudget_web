@@ -3,7 +3,6 @@ package com.ui.service;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.ui.mvc.model.Expenses;
-import org.apache.commons.codec.binary.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
@@ -131,6 +130,67 @@ public class ExpensesService {
         }
         throw new RuntimeException("Http status not Ok" + EntityUtils.toString(response.getEntity()));
     }
+
+    public String updateExpensesBalance(String stringAmount, boolean testMode) throws AuthenticationException, IOException {
+
+        double amount = Util.parseAmountString(stringAmount);
+        if (testMode) {
+            return "" + amount;
+        }
+
+        HttpGet httpGet = new HttpGet("http://localhost:7004/budget/expenses/update/expenses_balance?amount="+amount);
+        authRequest(httpGet);
+        HttpResponse response = client.execute(httpGet);
+
+        if (response.getStatusLine().getStatusCode()==HttpStatus.OK.value()) {
+            return "" + amount;
+        }
+        throw new RuntimeException("Http status not Ok" + EntityUtils.toString(response.getEntity()));
+
+    }
+
+    public Map<String, String> fundUpdate(
+            String stringAmount,
+            String stringCurrency,
+            String stringPrice,
+            String description,
+            boolean testMode
+    ) throws AuthenticationException, IOException {
+
+        double amount = Util.parseAmountString(stringAmount);
+        double price = Double.parseDouble(stringPrice);
+        int currency = Integer.valueOf(stringCurrency);
+        String currencyValue = "Рубль";
+        if (currency == 1) currencyValue = "Доллар";
+        if (currency == 2) currencyValue = "Евро";
+
+        Map<String, String> result = ImmutableMap.of(
+                "amount", String.valueOf(amount),
+                "price", stringPrice,
+                "currency", currencyValue,
+                "description", description
+        );
+
+        if (testMode) {
+            return result;
+        }
+
+        HttpGet httpGet = new HttpGet(
+                String.format(
+                        "http://localhost:7004/budget/fund/save?currency=%d&description=%s&price=%.2f&amount=%.2f",
+                        currency, description.replace(" ", "+"), price, amount
+                )
+        );
+        authRequest(httpGet);
+        HttpResponse response = client.execute(httpGet);
+
+        if (response.getStatusLine().getStatusCode()==HttpStatus.OK.value()) {
+            return result;
+        }
+        throw new RuntimeException("Http status not Ok" + EntityUtils.toString(response.getEntity()));
+
+    }
+
 
 
     private void authRequest(HttpRequest request) throws AuthenticationException {

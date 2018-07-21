@@ -11,7 +11,7 @@
 	<groupId>web</groupId>
 	<name>Spring Boot Web UI Sample</name>
 	<description>Spring Boot Web UI Sample</description>
-	<version>0</version>
+	<version>1.0.0</version>
 	<url>http://projects.spring.io/spring-boot/</url>
 	<organization>
 		<name>Pivotal Software, Inc.</name>
