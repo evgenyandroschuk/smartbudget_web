@@ -188,6 +188,40 @@ public class ExpensesService {
             return result;
         }
         throw new RuntimeException("Http status not Ok" + EntityUtils.toString(response.getEntity()));
+    }
+
+    public Map<String, String> currencyUpdate(
+            String stringCurrency,
+            String stringPrice,
+            boolean testMode
+    ) throws AuthenticationException, IOException {
+        double price = Double.parseDouble(stringPrice);
+        int currency = Integer.valueOf(stringCurrency);
+        String currencyValue = "Доллар";
+        if (currency == 2) currencyValue = "Евро";
+
+        Map<String, String> result = ImmutableMap.of(
+                "price", stringPrice,
+                "currency", currencyValue
+        );
+
+        if (testMode) {
+            return result;
+        }
+
+        HttpGet httpGet = new HttpGet(
+                String.format(
+                        "http://localhost:7004/budget/currency/update?currency=%d&amount=%.2f",
+                        currency, price
+                )
+        );
+        authRequest(httpGet);
+        HttpResponse response = client.execute(httpGet);
+
+        if (response.getStatusLine().getStatusCode()==HttpStatus.OK.value()) {
+            return result;
+        }
+        throw new RuntimeException("Http status not Ok" + EntityUtils.toString(response.getEntity()));
 
     }
 

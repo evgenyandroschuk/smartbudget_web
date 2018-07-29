@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Обновить копилку</title>
+    <title>Обновить курс валют</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -26,29 +26,20 @@
 
 <div class="container">
     <p></p>
-    <h3>Обновить копилку</h3>
+    <h3>Обновить курс валют</h3>
 
     <p></p>
 
-    <form action="/expenses/fund/response">
+    <form action="/expenses/currency/response">
         <div class="form-group" >
             <label for="currency">Валюта:</label>
             <select   class="form-control" id="currency" name="currency" >
                 <option th:each="currency : ${currencies}" th:value="${currency.key}"><p th:text="${currency.value}"></p></option>
             </select>
 
-            <label for="amount">Сумма:</label>
-            <input type="text" class="form-control" name ="amount" id="amount" required="true"
-                   pattern="^[=]?((\d+[.]\d{1,2})|[0-9]+)([+-]+((\d+[.]\d{1,2})|[0-9]+))*$"/>
-
             <label for="price">Цена валюты:</label>
             <input type="text" class="form-control" name ="price" id="price" required="true"
                    pattern="^(\d+[.]\d{1,2}){1}$"/>
-
-            <p></p>
-            <label for="description">Описание:</label>
-            <input type="text" class="form-control" name ="description" id="description" required="true"/>
-
             <p></p>
             <input type="submit" class="btn btn-info" value="Обновить"/>
         </div>

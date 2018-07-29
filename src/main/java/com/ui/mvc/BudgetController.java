@@ -146,6 +146,31 @@ public class BudgetController {
 		return "expenses/fund_response";
 	}
 
+	@RequestMapping(value = "expenses/currency/update", method = RequestMethod.GET)
+	public String currencyUpdate(Model model) {
+
+		Map<String,String> currencies = new ImmutableMap.Builder<String,String>()
+				.put("1", "Доллар")
+				.put("2", "Евро")
+				.build();
+
+		model.addAttribute("currencies", currencies.entrySet());
+		return "expenses/currency_update";
+	}
+
+	@RequestMapping(value = "expenses/currency/response", method = RequestMethod.GET)
+	public String currencyResponse(Model model,
+							   @RequestParam(value = "currency") String currency,
+							   @RequestParam(value = "price") String price
+	) throws IOException, AuthenticationException {
+
+		Map<String, String> result =
+				ExpensesService.of(USER, PASSWORD).currencyUpdate(currency, price, false);
+
+		model.addAttribute("result", result);
+		return "expenses/currency_response";
+	}
+
 	@RequestMapping(value = "/vehicle", method = RequestMethod.GET)
 	public String vehicle() {
 		return "vehicle/vehicle";
