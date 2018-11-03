@@ -76,6 +76,12 @@ public class BudgetControllerTests {
 				.andExpect(content().string(containsString("<title>Добавить расходы")));
 	}
 
+	@Test
+	public void testVehicle() throws Exception {
+		this.mockMvc.perform(get("/vehicle/")).andExpect(status().isOk())
+				.andExpect(content().string(containsString("<title>Транспортные средства</title>")));
+	}
+
 	/*
 	@Test
 	public void testCreate() throws Exception {

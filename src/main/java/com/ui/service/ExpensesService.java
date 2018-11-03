@@ -4,14 +4,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.ui.mvc.model.Expenses;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthenticationException;
-import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.http.HttpStatus;
 
@@ -21,11 +16,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class ExpensesService {
+public class ExpensesService extends AbstractService {
 
-    private CloseableHttpClient client = HttpClients.createDefault();
-    private String user;
-    private String password;
     private List<Map<String, Object>> expensesTypeList;
 
     private ExpensesService(String user, String password) {
@@ -223,13 +215,6 @@ public class ExpensesService {
         }
         throw new RuntimeException("Http status not Ok" + EntityUtils.toString(response.getEntity()));
 
-    }
-
-
-
-    private void authRequest(HttpRequest request) throws AuthenticationException {
-        UsernamePasswordCredentials basicAuth = new UsernamePasswordCredentials(user, password);
-        request.addHeader(new BasicScheme().authenticate(basicAuth, request, null));
     }
 
     public Map<String, Object> getStatisticCurrentMonth() throws AuthenticationException, IOException {

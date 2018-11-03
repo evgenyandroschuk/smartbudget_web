@@ -11,7 +11,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.ui.mvc;
+package com.ui.mvc.controller;
 
 import com.google.common.collect.ImmutableMap;
 import com.ui.mvc.model.Expenses;
@@ -34,11 +34,7 @@ import java.util.Map;
  * @author Eugene Androschuk
  */
 @Controller
-@RequestMapping("/")
-public class BudgetController {
-
-	private static final String USER = "user1";
-	private static final String PASSWORD = "password1";
+public class BudgetController extends AbstractController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String index() {
@@ -169,11 +165,6 @@ public class BudgetController {
 
 		model.addAttribute("result", result);
 		return "expenses/currency_response";
-	}
-
-	@RequestMapping(value = "/vehicle", method = RequestMethod.GET)
-	public String vehicle() {
-		return "vehicle/vehicle";
 	}
 
 	@RequestMapping(value = "/communication", method = RequestMethod.GET)

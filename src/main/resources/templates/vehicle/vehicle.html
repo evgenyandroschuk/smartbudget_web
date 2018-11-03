@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Bootstrap Example</title>
+    <title>Транспортные средства</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -26,7 +26,16 @@
 
 <div class="container">
     <h3>Транспортные средства</h3>
-    <p>Описание транспортных средств.</p>
+
+    <form action="/vehicle/details">
+        <div class="form-group" >
+            <label for="vehicle">Выбрать:</label>
+            <select class="form-control" id="vehicle" name="vehicle" >
+                <option th:each="vehicle : ${vehicles}" th:value="${vehicle[id]}"><p th:text="${vehicle[description]}"></p></option>
+            </select>
+            <input type="submit" class="btn btn-info" value="Выбрать"/>
+        </div>
+    </form>
 </div>
 
 </body>
