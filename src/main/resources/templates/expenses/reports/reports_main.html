@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Транспортные средства</title>
+    <title>Отчеты</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -17,27 +17,26 @@
         </div>
         <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
-            <li><a href="/expenses/">Expenses</a></li>
-            <li class="active"><a href="/vehicle/">Vehicles</a></li>
+            <li class="active"><a href="/expenses/">Expenses</a></li>
+            <li><a href="/vehicle/">Vehicles</a></li>
             <li><a href="/communication/">Communications</a></li>
         </ul>
     </div>
 </nav>
 
 <div class="container">
-    <h3>Транспортные средства</h3>
+    <p></p>
+    <h2>Отчеты</h2>
 
-    <form action="/vehicle/details">
+    <h3>Годовой отчет:</h3>
+    <form action="/expenses/reports/yearly">
         <div class="form-group" >
-            <h5>Выбрать:</h5>
-            <label class="radio-inline" th:each="vehicle : ${vehicles}" id="vehicles" >
-                <input type="radio" name="vehicle" th:value="${vehicle[id]}" required="true"><p th:text="${vehicle[description]}"></p></input>
-            </label>
+            <label for="year">Выберите год:</label>
+            <input type="text" class="form-control" name = "year" id="year" required="true" pattern="^[2]{1}[0]{1}[0-9]{2}$"/>
             <p></p>
-            <input type="submit" class="btn btn-info" value="Выбрать"/>
+            <input type="submit" class="btn btn-info" value="Получить отчет"/>
         </div>
     </form>
 </div>
-
 </body>
 </html>

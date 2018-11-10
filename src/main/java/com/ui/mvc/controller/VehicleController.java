@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Controller
-public class VehicleController extends AbstractController{
+public class VehicleController extends AbstractController {
 
     private VehicleService vehicleService;
 

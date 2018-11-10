@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Годовой отчет</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">Smart Budget</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="/expenses/">Expenses</a></li>
+            <li><a href="/vehicle/">Vehicles</a></li>
+            <li><a href="/communication/">Communications</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <a href="/expenses/reports" role="button" class="btn btn-primary">Назад</a>
+    <p></p>
+    <h3><p th:text="'Отчет за ' + ${year} + ' год'"/> </h3>
+
+    <table class="table table-bordered">
+        <tr>
+            <th><p>Месяц</p></th>
+            <th th:each="type : ${types}"><p th:text="${type[desc]}" ></p></th>
+            <th><p>Итого</p></th>
+        </tr>
+        <tr th:each="month: ${statistic}">
+            <th th:each="item: ${month}"><p th:text="${item}" ></p></th>
+        </tr>
+        <tr>
+            <th><p>Общее Итого</p></th>
+            <th th:each="item: ${yearlyStatistic}"><p th:text="${item}" ></p></th>
+        </tr>
+
+
+        <!--<tbody>-->
+        <!--<tr>-->
+            <!--<td th:each="total : ${totals}"><p th:text="${total.value}"></p></td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+    </table>
+
+</div>
+</body>
+</html>

@@ -167,6 +167,24 @@ public class BudgetController extends AbstractController {
 		return "expenses/currency_response";
 	}
 
+	/*  ======Reports Block=============  */
+
+	@RequestMapping(value = "expenses/reports", method = RequestMethod.GET)
+	public String reports(){
+		return "expenses/reports/reports_main";
+	}
+
+	@RequestMapping(value = "expenses/reports/yearly", method = RequestMethod.GET)
+	public String yearlyReport(Model model, @RequestParam(value = "year") Integer year) throws IOException, AuthenticationException {
+		ExpensesService expensesService = ExpensesService.of(USER, PASSWORD);
+		model.addAttribute("year", year);
+		model.addAttribute("types", expensesService.getExpensesType());
+		model.addAttribute("statistic", expensesService.getYearlyMonthlyStatistic(year));
+		model.addAttribute("yearlyStatistic", expensesService.getYearlyStatistic(year));
+		return "expenses/reports/yearly_response";
+	}
+
+
 	@RequestMapping(value = "/communication", method = RequestMethod.GET)
 	public String communication() {
 		return "communication/communication";
