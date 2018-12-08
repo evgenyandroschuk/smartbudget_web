@@ -19,6 +19,7 @@ import com.ui.service.ExpensesService;
 import org.apache.http.auth.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,9 +27,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Eugene Androschuk
@@ -182,6 +185,29 @@ public class BudgetController extends AbstractController {
 		model.addAttribute("statistic", expensesService.getYearlyMonthlyStatistic(year));
 		model.addAttribute("yearlyStatistic", expensesService.getYearlyStatistic(year));
 		return "expenses/reports/yearly_response";
+	}
+
+	@RequestMapping(value = "expenses/reports/description", method = RequestMethod.GET)
+	public String reportByDescription(
+			Model model,
+			@RequestParam String description,
+			@RequestParam String start,
+			@RequestParam String end
+	) throws IOException, AuthenticationException {
+		ExpensesService expensesService = ExpensesService.of(USER, PASSWORD);
+		List<Expenses> expensesList = expensesService.getExpensesByDescription(description, start, end);
+
+		String startDate = LocalDate.parse(start, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+				.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+		String endDate = LocalDate.parse(end, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+				.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+
+		double totalAmount = expensesList.stream().collect(Collectors.summarizingDouble(t -> t.getAmount())).getSum();
+		model.addAttribute("results", expensesList);
+		model.addAttribute("total", totalAmount);
+		model.addAttribute("start", startDate);
+		model.addAttribute("end", endDate);
+		return "expenses/reports/reports_description";
 	}
 
 

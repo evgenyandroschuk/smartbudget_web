@@ -28,15 +28,40 @@
     <p></p>
     <h2>Отчеты</h2>
 
-    <h3>Годовой отчет:</h3>
-    <form action="/expenses/reports/yearly">
-        <div class="form-group" >
-            <label for="year">Выберите год:</label>
-            <input type="text" class="form-control" name = "year" id="year" required="true" pattern="^[2]{1}[0]{1}[0-9]{2}$"/>
-            <p></p>
-            <input type="submit" class="btn btn-info" value="Получить отчет"/>
-        </div>
-    </form>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <h4>Годовой отчет:</h4>
+            <form action="/expenses/reports/yearly">
+                <div class="form-group" >
+                    <label for="year">Выберите год:</label>
+                    <input type="text" class="form-control" name = "year" id="year" required="true" pattern="^[2]{1}[0]{1}[0-9]{2}$"/>
+                    <p></p>
+                    <input type="submit" class="btn btn-info" value="Получить отчет"/>
+                </div>
+            </form>
+        </li>
+        <li class="list-group-item">
+            <h4>Поиск по описанию за период:</h4>
+            <form action="/expenses/reports/description">
+                <div class="form-group" >
+                    <div class="row">
+                        <div class="input-group">
+                            <span class="input-group-addon">Описание</span>
+                            <input type="text" class="form-control" name = "description" id="description" required="true"/>
+                            <span class="input-group-addon">Дата начала</span>
+                            <input type="date" class="form-control" name = "start" id="start" required="true"/>
+                            <span class="input-group-addon">Дата окончания</span>
+                            <input type="date" class="form-control" name = "end" id="end" required="true"/>
+                        </div>
+                    </div>
+                    <p></p>
+                    <input type="submit" class="btn btn-info" value="Получить отчет"/>
+                </div>
+            </form>
+        </li>
+    </ul>
+
+
 </div>
 </body>
 </html>

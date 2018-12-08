@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Расходы</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">Smart Budget</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="/expenses/">Expenses</a></li>
+            <li><a href="/vehicle/">Vehicles</a></li>
+            <li><a href="/communication/">Communications</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h3> <p th:text="'Отчет по описанию за период ' + ${start} + ' - ' + ${end}"/></h3>
+
+    <table class="table table-bordered" width="100">
+        <thead>
+        <tr>
+            <th><p>Итого</p></th>
+            <th><p th:text="${total}"></p></th>
+        </tr>
+        </thead>
+
+    </table>
+
+    <p>Список расходов</p>
+
+    <table class="table table-bordered" width="100">
+        <thead>
+        <tr>
+            <td width="20" height="1">ID</td>
+            <td width="50">Описание</td>
+            <td width="50">Тип</td>
+            <td width="50">Дата</td>
+            <td width="50">Сумма</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="result : ${results}" >
+            <td th:text="${result.id}"></td>
+            <td th:text="${result.description}"></td>
+            <td th:text="${result.type}"></td>
+            <td th:text="${result.date}"></td>
+            <td th:text="${result.amount}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

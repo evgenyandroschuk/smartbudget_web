@@ -46,6 +46,24 @@ public class ExpensesService extends AbstractService {
         return ImmutableList.of();
     }
 
+    public List<Expenses> getExpensesByDescription(
+            String description, String startDate, String endDate
+    ) throws AuthenticationException, IOException {
+        String desc = description.replace(" ", "+");
+        String requestPattern = "http://localhost:7004/budget/expenses/description?description=%s&start=%s&end=%s";
+        String requestString = String.format(requestPattern, desc, startDate, endDate);
+        HttpGet httpGet = new HttpGet(requestString);
+        authRequest(httpGet);
+        HttpResponse response = client.execute(httpGet);
+
+        if (response.getStatusLine().getStatusCode()== HttpStatus.OK.value()) {
+            return getExpensesByEntity(response.getEntity());
+        }
+
+        System.out.println(response.getStatusLine());
+        return ImmutableList.of();
+    }
+
     private List<Expenses> getExpensesByEntity (HttpEntity entity) throws IOException {
         List<Expenses> result = new LinkedList<>();
         Util.getListMapFromEntity(entity).forEach(
