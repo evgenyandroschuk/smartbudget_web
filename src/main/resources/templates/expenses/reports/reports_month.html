@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Расходы по описанию</title>
+    <title>Расходы за месяц</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -25,7 +25,7 @@
 </nav>
 
 <div class="container">
-    <h3> <p th:text="'Отчет по описанию за период ' + ${start} + ' - ' + ${end}"/></h3>
+    <h3> <p th:text="'Отчет за ' + ${month} + '.' + ${year}"/></h3>
 
     <table class="table table-bordered" width="100">
         <thead>
@@ -35,6 +35,18 @@
         </tr>
         </thead>
 
+    </table>
+
+    <p>Итоги</p>
+    <table class="table table-bordered">
+        <tr>
+            <th th:each="total : ${totals}"><p th:text="${total.key}" ></p></th>
+        </tr>
+        <tbody>
+        <tr>
+            <td th:each="total : ${totals}"><p th:text="${total.value}"></p></td>
+        </tr>
+        </tbody>
     </table>
 
     <p>Список расходов</p>

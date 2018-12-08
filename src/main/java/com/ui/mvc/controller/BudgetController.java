@@ -210,6 +210,33 @@ public class BudgetController extends AbstractController {
 		return "expenses/reports/reports_description";
 	}
 
+	@RequestMapping(value = "expenses/reports/month", method = RequestMethod.GET)
+	public String reportByMonth(
+			Model model,
+			@RequestParam Integer year,
+			@RequestParam Integer month
+	) throws IOException, AuthenticationException {
+		ExpensesService expensesService = ExpensesService.of(USER, PASSWORD);
+		List<Expenses> expensesList = expensesService.getExpensesByYearMonth(year, month);
+
+		Map<String, Double> totalList = new HashMap<>();
+		expensesList.forEach(t -> {
+			double sum = totalList.get(t.getType()) == null ?  0 : totalList.get(t.getType());
+			totalList.put(t.getType(), t.getAmount() + sum );
+		});
+
+		double totalAmount = expensesList.stream()
+				.filter(t -> !t.getType().equals("Income"))
+				.collect(Collectors.summarizingDouble(t -> t.getAmount()))
+				.getSum();
+		model.addAttribute("results", expensesList);
+		model.addAttribute("total", totalAmount);
+		model.addAttribute("month", month);
+		model.addAttribute("year", year);
+		model.addAttribute("totals", totalList);
+		return "expenses/reports/reports_month";
+	}
+
 
 	@RequestMapping(value = "/communication", method = RequestMethod.GET)
 	public String communication() {

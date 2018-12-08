@@ -46,6 +46,21 @@ public class ExpensesService extends AbstractService {
         return ImmutableList.of();
     }
 
+    public List<Expenses> getExpensesByYearMonth(int year, int month) throws AuthenticationException, IOException {
+        String requestPattern = "http://localhost:7004/budget/expenses?year=%d&month=%d";
+        String requestString = String.format(requestPattern, year, month);
+        HttpGet httpGet = new HttpGet(requestString);
+        authRequest(httpGet);
+        HttpResponse response = client.execute(httpGet);
+
+        if (response.getStatusLine().getStatusCode()== HttpStatus.OK.value()) {
+            return getExpensesByEntity(response.getEntity());
+        }
+
+        System.out.println(response.getStatusLine());
+        return ImmutableList.of();
+    }
+
     public List<Expenses> getExpensesByDescription(
             String description, String startDate, String endDate
     ) throws AuthenticationException, IOException {

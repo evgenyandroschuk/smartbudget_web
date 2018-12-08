@@ -40,6 +40,25 @@
                 </div>
             </form>
         </li>
+
+        <li class="list-group-item">
+            <h4>Отчет за месяц:</h4>
+            <form action="/expenses/reports/month">
+                <div class="form-group" >
+                    <div class="row">
+                        <div class="input-group">
+                            <span class="input-group-addon">Месяц</span>
+                            <input type="text" class="form-control" name = "month" id="month" required="true" pattern="^[1-9]{1}|([1]{1}[0-2]{1})$"/>
+                            <span class="input-group-addon">Год</span>
+                            <input type="text" class="form-control" name = "year" id="year" required="true" pattern="^[2]{1}[0]{1}[0-9]{2}$"/>
+                        </div>
+                    </div>
+                    <p></p>
+                    <input type="submit" class="btn btn-info" value="Получить отчет"/>
+                </div>
+            </form>
+        </li>
+
         <li class="list-group-item">
             <h4>Поиск по описанию за период:</h4>
             <form action="/expenses/reports/description">
