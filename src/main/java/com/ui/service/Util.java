@@ -14,11 +14,9 @@ import java.util.Map;
 public class Util {
 
     public static List<Map<String, Object>> getListMapFromEntity(HttpEntity httpEntity) throws IOException {
-
         String jsonString = EntityUtils.toString(httpEntity);
         JSONArray jsonArray = new JSONArray(jsonString);
         List list =  jsonArray.toList();
-
         return list;
     }
 

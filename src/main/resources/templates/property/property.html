@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Bootstrap Example</title>
+    <title>Коммуникации и обслуживание</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -25,8 +25,18 @@
 </nav>
 
 <div class="container">
-    <h3>Коммуникации и обслуживание</h3>
-    <p>A navigation bar is a navigation header that is placed at the top of the page.</p>
+    <h3>Объекты обслуживания</h3>
+
+    <form action="/property/details">
+        <div class="form-group" >
+            <h5>Выбрать:</h5>
+            <label class="radio-inline" th:each="property : ${properties}" id="properties" >
+                <input type="radio" name="property" th:value="${property.id}" required="true"><p th:text="${property.description}"></p></input>
+            </label>
+            <p></p>
+            <input type="submit" class="btn btn-info" value="Выбрать"/>
+        </div>
+    </form>
 </div>
 
 </body>

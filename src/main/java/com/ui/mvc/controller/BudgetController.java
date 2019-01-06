@@ -238,11 +238,6 @@ public class BudgetController extends AbstractController {
 	}
 
 
-	@RequestMapping(value = "/communication", method = RequestMethod.GET)
-	public String communication() {
-		return "communication/communication";
-	}
-
 	@RequestMapping("foo")
 	public String foo() {
 		throw new RuntimeException("Expected exception in controller");

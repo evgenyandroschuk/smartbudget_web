@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Описание транспортного средства</title>
+    <title>Описание объекта</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -18,36 +18,29 @@
         <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
             <li><a href="/expenses/">Expenses</a></li>
-            <li class="active"><a href="/vehicle/">Vehicles</a></li>
-            <li><a href="/communication/">Communications</a></li>
+            <li><a href="/vehicle/">Vehicles</a></li>
+            <li class="active"><a href="/communication/">Communications</a></li>
         </ul>
     </div>
 </nav>
 
 <div class="container">
 
-    
-    <form action="/vehicle/data/add">
-        <input type="hidden" class="form-control" name = "vehicleId" id="vehicleId" th:value ="${vehicle.id}" required="true" />
+    <form action="/property/data/add">
+        <input type="hidden" class="form-control" name = "propertyId" id="propertyId" th:value ="${property.id}" required="true" />
         <input type="submit" class="btn btn-primary" value="Добавить запись"/>
     </form>
 
-    <h3>Транспортное средство</h3>
+    <h3>Объект</h3>
     <table class="table table-bordered">
         <tr>
             <th>ID</th>
             <th>Описание</th>
-            <th>Регистрационный номер</th>
-            <th>VIN</th>
-            <th>СТС</th>
         </tr>
         <tbody>
         <tr>
-            <th><p th:text="${vehicle.id}"></p></th>
-            <th><p th:text="${vehicle.description}"></p></th>
-            <th><p th:text="${vehicle.licensePlate}"></p></th>
-            <th><p th:text="${vehicle.vin}"></p></th>
-            <th><p th:text="${vehicle.sts}"></p></th>
+            <th><p th:text="${property.id}"></p></th>
+            <th><p th:text="${property.description}"></p></th>
         </tr>
         </tbody>
     </table>
@@ -59,23 +52,24 @@
         <thead>
         <tr>
             <td width="20" height="1">ID</td>
-            <td width="50">Тип сервиса</td>
+            <td width="50">Объект</td>
+            <td width="50">Сервис</td>
             <td width="50">Описание</td>
-            <td width="50">Пробег</td>
+            <td width="50">Мастер</td>
             <td width="50">Стоимость</td>
             <td width="50">Дата</td>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="data : ${vehicleData}" >
+        <tr th:each="data : ${propertyData}" >
             <td th:text="${data.id}"></td>
-            <td th:text="${data.vehicleServiceType.description}"></td>
+            <td th:text="${data.property.description}"></td>
+            <td th:text="${data.service.description}"></td>
             <td th:text="${data.description}"></td>
-            <td th:text="${data.mileAge}"></td>
+            <td th:text="${data.name}"></td>
             <td th:text="${data.price}"></td>
-            <td th:text="${data.dateString}"></td>
+            <td th:text="${data.updateDate}"></td>
         </tr>
-
         </tbody>
     </table>
 

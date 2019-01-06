@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добавление данных по обслуживанию</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">Smart Budget</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/expenses/">Expenses</a></li>
+            <li><a href="/vehicle/">Vehicles</a></li>
+            <li class="active"><a href="/communication/">Communications</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h3><p th:text="'Добавление данных для \'' +  ${property.description} + '\''"/></h3>
+
+    <form action="/property/data/add/response">
+        <div class="form-group" >
+
+            <label for="serviceId">Тип сервиса</label>
+            <select class="form-control" id="serviceId" name="serviceId" required="true" >
+                <option th:each="service : ${services}"  th:value="${service.id}"><p th:text="${service.description}"></p></option>
+            </select>
+
+
+            <label for="description">Описание</label>
+            <input type="text" class="form-control" name="description" id="description" required="true"/>
+
+            <label for="name">Мастер</label>
+            <input type="text" class="form-control" name="name" id="name" required="true"/>
+
+            <label for="price">Стоимость</label>
+            <input type="text" class="form-control" name="price" id="price" required="true" pattern="^[1-9]{1}[0-9]{0,8}"/>
+
+            <label for="date">Дата</label>
+            <input type="date" class="form-control" name="date" id="date" required="true"/>
+
+            <input type="hidden" class="form-control" name = "propertyId" id="propertyId" th:value ="${property.id}" required="true" />
+
+            <input type="submit" class="btn btn-info" value="Сохранить"/>
+        </div>
+    </form>
+
+</div>
+
+</body>
+</html>

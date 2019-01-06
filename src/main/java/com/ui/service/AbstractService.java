@@ -15,6 +15,7 @@ public abstract class AbstractService {
     protected CloseableHttpClient client = HttpClients.createDefault();
     protected String user;
     protected String password;
+    protected String host = "http://localhost:7004/";
 
     protected void authRequest(HttpRequest request) throws AuthenticationException {
         UsernamePasswordCredentials basicAuth = new UsernamePasswordCredentials(user, password);

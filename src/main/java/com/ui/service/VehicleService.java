@@ -25,7 +25,6 @@ public class VehicleService extends AbstractService {
     private List<Map<String, Object>> vehicleList;
     private List<Vehicle> vehicles;
     private List<VehicleServiceType> vehicleServiceTypes;
-    private String host = "http://localhost:7004/";
 
     private VehicleService(String user, String password) {
         this.user = user;
