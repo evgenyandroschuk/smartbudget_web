@@ -45,10 +45,21 @@ public class BudgetController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/expenses", method = RequestMethod.GET)
-	public String expenses(Model model) throws IOException, AuthenticationException {
+	public String expenses(Model model) {
 
 		ExpensesService expensesService = ExpensesService.of(USER, PASSWORD);
-		List<Expenses> expensesList = expensesService.getCurrentMonthExpenses();
+		List<Expenses> expensesList = null;
+		Map<String, Object> statisticCurrentMonth = null;
+		try {
+			expensesList = expensesService.getCurrentMonthExpenses();
+			statisticCurrentMonth = expensesService.getStatisticCurrentMonth();
+		} catch (AuthenticationException e) {
+			model.addAttribute("message", "Проблема с аутентификацей к сервису с данными " );
+			return "common_error";
+		} catch (IOException e) {
+			model.addAttribute("message", "Недоступен сервер с данными.");
+			return "common_error";
+		}
 
 		Map<String, Double> totalList = new HashMap<>();
 		expensesList.forEach(t -> {
@@ -58,7 +69,7 @@ public class BudgetController extends AbstractController {
 
 		model.addAttribute("results", expensesList);
 		model.addAttribute("totals", totalList.entrySet());
-		model.addAttribute("statistic", expensesService.getStatisticCurrentMonth());
+		model.addAttribute("statistic", statisticCurrentMonth);
 		return "expenses/expenses";
 	}
 

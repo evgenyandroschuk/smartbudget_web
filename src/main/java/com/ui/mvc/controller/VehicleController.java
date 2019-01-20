@@ -24,8 +24,16 @@ public class VehicleController extends AbstractController {
     }
 
     @RequestMapping(value = "/vehicle/", method = RequestMethod.GET)
-    public String vehicle(Model model) throws IOException, AuthenticationException {
-        model.addAttribute("vehicles", vehicleService.getVehicleList());
+    public String vehicle(Model model) {
+        try {
+            model.addAttribute("vehicles", vehicleService.getVehicleList());
+        } catch (AuthenticationException e) {
+            model.addAttribute("message", "Проблема с аутентификацей к сервису с данными " );
+            return "common_error";
+        } catch (IOException e) {
+            model.addAttribute("message", "Недоступен сервер с данными.");
+            return "common_error";
+        }
         return "vehicle/vehicle";
     }
 

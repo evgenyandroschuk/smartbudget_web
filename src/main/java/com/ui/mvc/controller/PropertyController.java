@@ -25,8 +25,16 @@ public class PropertyController extends AbstractController {
     }
 
     @RequestMapping(value = "/communication", method = RequestMethod.GET)
-    public String properties(Model model) throws IOException, AuthenticationException {
-        model.addAttribute("properties", propertyService.getPropertyList());
+    public String properties(Model model) {
+        try {
+            model.addAttribute("properties", propertyService.getPropertyList());
+        } catch (IOException e) {
+            model.addAttribute("message", "Недоступен сервер с данными.");
+            return "common_error";
+        } catch (AuthenticationException e) {
+            model.addAttribute("message", "Проблема с аутентификацей к сервису с данными " );
+            return "common_error";
+        }
         return "property/property";
     }
 

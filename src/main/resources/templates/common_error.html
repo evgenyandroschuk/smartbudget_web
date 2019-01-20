@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Расходы добавлены</title>
+    <title>Главная страница</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -16,8 +16,8 @@
             <a class="navbar-brand">Smart Budget</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="/">Home</a></li>
-            <li class="active"><a href="/expenses/">Expenses</a></li>
+            <li class="active"><a href="/">Home</a></li>
+            <li ><a href="/expenses/">Expenses</a></li>
             <li><a href="/vehicle/">Vehicles</a></li>
             <li><a href="/communication/">Communications</a></li>
         </ul>
@@ -25,15 +25,11 @@
 </nav>
 
 <div class="container">
-
-    <a href="/expenses/balance/update" role="button" class="btn btn-primary">Обновить повтрно</a>
-
-    <p></p>
-    <h4>Баланс обновлен:</h4>
     <div class="well">
-        <h5><p th:text="'Доступный остаток: ' + ${updated_amount}"/></h5>
+        <h2><p th:text="'Ошибка: ' + ${message}"/></h2>
     </div>
 
 </div>
+
 </body>
 </html>
