@@ -52,7 +52,6 @@
         <thead>
         <tr>
             <td width="20" height="1">ID</td>
-            <td width="50">Объект</td>
             <td width="50">Сервис</td>
             <td width="50">Описание</td>
             <td width="50">Мастер</td>
@@ -63,7 +62,6 @@
         <tbody>
         <tr th:each="data : ${propertyData}" >
             <td th:text="${data.id}"></td>
-            <td th:text="${data.property.description}"></td>
             <td th:text="${data.service.description}"></td>
             <td th:text="${data.description}"></td>
             <td th:text="${data.name}"></td>
