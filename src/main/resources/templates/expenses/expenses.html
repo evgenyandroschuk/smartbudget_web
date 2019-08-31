@@ -40,18 +40,18 @@
             <th>Потрачено за месяц</th>
             <th>Сколько всего денег</th>
             <th>Доступный остаток</th>
-            <th><p th:text="'C начала учета (' + ${statistic[open_balance_date]} + ')'"></p> </th>
-            <th><p th:text="'Доллары (курс ' + ${statistic[dollar_price]} + ')'"></p> </th>
-            <th><p th:text="'Евро ( курс' + ${statistic[euro_price]} + ')'"></p> </th>
+            <th><p th:text="'C начала учета (' + ${statistic[openBalanceDate]} + ')'"></p> </th>
+            <th><p th:text="'Доллары (курс ' + ${statistic[dollarPrice]} + ')'"></p> </th>
+            <th><p th:text="'Евро ( курс' + ${statistic[euroPrice]} + ')'"></p> </th>
         </tr>
         <tbody>
         <tr>
-            <th><p th:text="${statistic[amount]}"></p></th>
-            <th><p th:text="${statistic[rest_all_amount]}"></p></th>
-            <th><p th:text="${statistic[rest_amount]}"></p></th>
-            <th><p th:text="${statistic[open_balance_amount]}"></p></th>
-            <th><p th:text="${statistic[rest_dollar_amount]} + ' (' + ${statistic[rest_dollar_in_rub]} + ' руб.)'"></p></th>
-            <th><p th:text="${statistic[rest_euro_amount]} + ' (' + ${statistic[rest_euro_in_rub]} + ' руб.)'"></p></th>
+            <th><p th:text="${statistic[expensesTotalAmount]}"></p></th>
+            <th><p th:text="${statistic[allAmountInRub]}"></p></th>
+            <th><p th:text="${statistic[restAmount]}"></p></th>
+            <th><p th:text="${statistic[openBalanceAmount]}"></p></th>
+            <th><p th:text="${statistic[fundDollarAmount]} + ' (' + ${statistic[fundDollarAmountInRub]} + ' руб.)'"></p></th>
+            <th><p th:text="${statistic[fundEuroAmount]} + ' (' + ${statistic[fundEuroAmountInRub]} + ' руб.)'"></p></th>
         </tr>
         </tbody>
     </table>
