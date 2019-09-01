@@ -110,7 +110,7 @@ public class ExpensesService extends AbstractService {
 
     private String getTypeDescriptionById(Integer id) {
         try {
-            return (String) getExpensesType().stream().filter(t -> t.get("id").equals(id)).findAny().orElse(ImmutableMap.of()).get("desc");
+            return (String) getExpensesType().stream().filter(t -> t.get("id").equals(id)).findAny().orElse(ImmutableMap.of()).get("description");
         } catch (AuthenticationException | IOException e) {
             throw new RuntimeException(e);
         }

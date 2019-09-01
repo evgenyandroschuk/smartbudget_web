@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 public class VehicleService extends AbstractService {
 
+    private final String USER_ID = "1";
     private List<Map<String, Object>> vehicleList;
     private List<Vehicle> vehicles;
     private List<VehicleServiceType> vehicleServiceTypes;
@@ -70,7 +71,7 @@ public class VehicleService extends AbstractService {
 
     private void fillVehicleList() throws AuthenticationException, IOException {
         List<Map<String, Object>> tempList = new LinkedList<>();
-        HttpGet httpGet = new HttpGet(host + "vehicle/vehicles");
+        HttpGet httpGet = new HttpGet(host + "vehicle/v2/vehicles?user_id=" + USER_ID);
         authRequest(httpGet);
         CloseableHttpClient client = HttpClients.createDefault();
         HttpResponse response = client.execute(httpGet);
@@ -100,22 +101,29 @@ public class VehicleService extends AbstractService {
     }
 
     public List<VehicleData> getVehicleData(int vehicleId) throws AuthenticationException, IOException {
-        HttpGet httpGet = new HttpGet(host + "vehicle/data/last?vehicle="+vehicleId+"&size=100");
+        final String START_DATE = "2010-01-01";
+        HttpGet httpGet = new HttpGet(
+                host + "vehicle/v2/data/last?vehicle="+vehicleId+"&start_date=" + START_DATE + "&user_id=" + USER_ID
+        );
         authRequest(httpGet);
         CloseableHttpClient client = HttpClients.createDefault();
         HttpResponse response = client.execute(httpGet);
         if (response.getStatusLine().getStatusCode()== HttpStatus.OK.value()) {
             List<VehicleData> vehicleData = new LinkedList<>();
-            Util.getListMapFromEntity(response.getEntity()).forEach(map -> {
-                int id = (Integer) map.get("id");
-                int serviceTypeId = (Integer) map.get("vehicleServiceType");
-                VehicleServiceType serviceType = getVehicleServiceTypeById(serviceTypeId);
-                String description = (String) map.get("description");
-                int mileAge = (Integer) map.get("mileAge");
-                double price = (Double) map.get("price");
-                String dateString = (String) map.get("date");
-                LocalDate localDate = LocalDate.parse(dateString) ;
-                vehicleData.add(VehicleData.of(id, serviceType, vehicleId, description, mileAge, price, localDate));
+            Util.getListMapFromEntity(response.getEntity()).stream()
+                    .filter(map -> (map.get("vehicleId")).equals(vehicleId))
+                    .forEach(map -> {
+                        int id = (Integer) map.get("id");
+                        int serviceTypeId = (Integer) map.get("vehicleServiceType");
+                        VehicleServiceType serviceType = getVehicleServiceTypeById(serviceTypeId);
+                        String description = (String) map.get("description");
+                        int mileAge = (Integer) map.get("mileAge");
+                        double price = (Double) map.get("price");
+                        String dateString = (String) map.get("date");
+                        LocalDate localDate = LocalDate.parse(dateString) ;
+                        vehicleData.add(
+                                VehicleData.of(id, serviceType, vehicleId, description, mileAge, price, localDate)
+                        );
             });
             return vehicleData;
         }
@@ -125,7 +133,7 @@ public class VehicleService extends AbstractService {
 
     private void fillServiceTypes() throws AuthenticationException, IOException {
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet(host + "vehicle/servicetype");
+        HttpGet httpGet = new HttpGet(host + "vehicle/v2/servicetype?user_id=" + USER_ID);
         authRequest(httpGet);
         HttpResponse response = client.execute(httpGet);
         List<VehicleServiceType> tempList = new LinkedList<>();
@@ -155,7 +163,8 @@ public class VehicleService extends AbstractService {
 
     public void saveVehicleData(VehicleData vehicleData) throws AuthenticationException, IOException {
         String request = host + String.format(
-                "vehicle/data/save?type=%d&vehicle=%d&description=%s&mileage=%d&price=%.0f&date=%s",
+                "vehicle/v2/data/save?user_id=%s&type=%d&vehicle=%d&description=%s&mileage=%d&price=%.0f&date=%s",
+                USER_ID,
                 vehicleData.getVehicleServiceType().getId(),
                 vehicleData.getVehicleId(),
                 vehicleData.getDescription().replace(" ", "+"),

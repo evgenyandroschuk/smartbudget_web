@@ -40,7 +40,7 @@
 
             <h5>Тип:</h5>
             <label class="radio-inline" th:each="type : ${types}" id="types">
-                <input type="radio" name="type" th:value="${type[id]}" required="true"><p th:text="${type[desc]}"></p></input>
+                <input type="radio" name="type" th:value="${type[id]}" required="true"><p th:text="${type[description]}"></p></input>
             </label>
             <p></p>
 
